@@ -1,5 +1,8 @@
+from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
 from datetime import datetime
+
+from mainapp.models import News
 
 
 class ContactsView(TemplateView):
@@ -54,33 +57,14 @@ class NewsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data['object_list'] = [
-            {
-                'newsTitle': 'Новость №1',
-                'preview': 'Превью №1',
-                'date': datetime.now()
-            },
-            {
-                'newsTitle': 'Новость №2',
-                'preview': 'Превью №2',
-                'date': datetime.now()
-            },
-            {
-                'newsTitle': 'Новость №3',
-                'preview': 'Превью №3',
-                'date': datetime.now()
-            },
-            {
-                'newsTitle': 'Новость №4',
-                'preview': 'Превью №4',
-                'date': datetime.now()
-            },
-            {
-                'newsTitle': 'Новость №5',
-                'preview': 'Превью №5',
-                'date': datetime.now()
-            }
-        ]
+        context_data['object_list'] = News.objects.filter(deleted=False)
         return context_data
 
 
+class NewsDetail(TemplateView):
+    template_name = 'mainapp/news_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['object'] = get_object_or_404(News, pk=self.kwargs.get('pk'))
+        return context_data
