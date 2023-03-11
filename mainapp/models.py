@@ -2,7 +2,20 @@ from django.db import models
 
 NULLABLE = {'blank': True, 'null': True}
 
+
+class NewsManager(models.Manager):
+
+    def delete(self):
+        pass
+
+    def get_queryset(self):
+        return super().get_queryset().filter(deleted=False)
+
+
 class News(models.Model):
+
+    # objects = NewsManager()
+
     title = models.CharField(max_length=256, verbose_name='Название')
     preamble = models.CharField(max_length=1024, verbose_name='Описание')
     body = models.TextField(blank=True, null=True, verbose_name='Тело')
@@ -70,8 +83,8 @@ class Lesson(models.Model):
         return f'{self.pk} {self.title}'
 
     class Meta:
-        verbose_name = 'Курс'
-        verbose_name_plural = 'Курсы'
+        verbose_name = 'Урок'
+        verbose_name_plural = 'Уроки'
 
     def delete(self, *args, **kwargs):
         self.deleted = True

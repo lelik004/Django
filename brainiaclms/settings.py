@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'crispy_forms',
+    'crispy_bootstrap4',
     'social_django',
 
     'authapp',
@@ -59,7 +61,7 @@ ROOT_URLCONF = 'brainiaclms.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -149,3 +151,5 @@ AUTHENTICATION_BACKENDS = (
 
 SOCIAL_AUTH_GITHUB_KEY = 'e293d0015d700cfcfb5a'
 SOCIAL_AUTH_GITHUB_SECRET = 'eb659c2611ce1f71f46ccca0c3817ddaf51d2c8e'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
